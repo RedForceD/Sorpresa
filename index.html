@@ -205,9 +205,9 @@
 <body class="min-h-screen text-slate-800 relative selection:bg-pink-300 selection:text-pink-900 pb-16">
 
   <!-- =========================================================================
-       PANTALLA DE CARGA (LOADER) CON PÉTALOS DE GIRASOL FLORECIENDO
+       PANTALLA DE CARGA (LOADER) CON PÉTALOS DE GIRASOL FLORECIENDO (100% OPACA)
        ========================================================================= -->
-  <div id="loadingScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-amber-50 via-rose-50/80 to-lime-50 px-6 transition-opacity duration-700 ease-out">
+  <div id="loadingScreen" style="background: linear-gradient(180deg, #FFFBEB 0%, #FFF1F2 50%, #F7FEE7 100%); background-color: #FFFBEB;" class="fixed inset-0 z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-700 ease-out">
     
     <div class="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
       <div class="absolute inset-0 rounded-full bg-yellow-300/30 blur-2xl animate-pulse-soft"></div>
@@ -262,11 +262,11 @@
     </button>
   </div>
 
-  <!-- Fondo de pétalos cayendo -->
-  <div id="petals-container" class="bg-petals"></div>
+  <!-- Fondo de pétalos cayendo (oculto mientras está la pantalla de carga) -->
+  <div id="petals-container" class="bg-petals opacity-0 invisible transition-opacity duration-500"></div>
 
-  <!-- Barra superior compacta para celular -->
-  <header class="sticky top-0 z-30 backdrop-blur-md bg-white/75 border-b border-pink-100/80 px-4 py-2.5 shadow-sm">
+  <!-- Barra superior compacta para celular (oculta mientras está la pantalla de carga) -->
+  <header id="mainHeader" class="sticky top-0 z-30 backdrop-blur-md bg-white/75 border-b border-pink-100/80 px-4 py-2.5 shadow-sm opacity-0 invisible transition-opacity duration-500">
     <div class="max-w-md sm:max-w-xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <span class="text-2xl animate-spin-slow">🌻</span>
@@ -289,8 +289,8 @@
     </div>
   </header>
 
-  <!-- CONTENEDOR PRINCIPAL -->
-  <main class="max-w-md sm:max-w-xl mx-auto px-4 pt-4 sm:pt-6 space-y-6 sm:space-y-8 relative z-10">
+  <!-- CONTENEDOR PRINCIPAL (oculto mientras está la pantalla de carga para que jamás se transparente) -->
+  <main id="mainContent" class="max-w-md sm:max-w-xl mx-auto px-4 pt-4 sm:pt-6 space-y-6 sm:space-y-8 relative z-10 opacity-0 invisible transition-opacity duration-500">
 
     <!-- =========================================================================
          GRAN SECCIÓN PROTAGONISTA: CUENTA REGRESIVA CON MÁXIMA JERARQUÍA
@@ -876,7 +876,7 @@
         </h3>
         <!-- ✏️ [CAMBIAR TEXTO 48]: Bienvenida del juego (Línea 697) -->
         <p class="text-xs sm:text-sm text-slate-600 mt-1">
-          ¡Cruzá los 5 mundos del bosque encantado con cuidado hasta alcanzar el Gran Girasol!
+          ¡Cruza los 5 mundos del bosque encantado con cuidado hasta alcanzar el Gran Girasol!
         </p>
       </div>
 
@@ -885,7 +885,7 @@
         <div class="flex items-center space-x-3">
           <span class="w-9 h-9 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-sm">◀ ▶</span>
           <!-- ✏️ [CAMBIAR TEXTO 49]: Explicación controles mover en celular (Línea 707) -->
-          <span><strong>Caminar suave:</strong> Usá las flechas de la izquierda para avanzar y medir bien tus saltos.</span>
+          <span><strong>Caminar suave:</strong> Usa las flechas de la izquierda para avanzar y medir bien tus saltos.</span>
         </div>
         <div class="flex items-center space-x-3">
           <span class="w-9 h-9 bg-pink-100 text-pink-700 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-sm">🌸</span>
@@ -895,7 +895,7 @@
         <div class="flex items-center space-x-3">
           <span class="w-9 h-9 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-sm">🏮</span>
           <!-- ✏️ [CAMBIAR TEXTO 51]: Explicación michis aliens, puentes y farolitos (Línea 717) -->
-          <span><strong>Retos del bosque:</strong> Salta encima de los Gatos Aliens, usa los hongos mágicos, cuidate de los puentes que caen y activa los farolitos de guardado.</span>
+          <span><strong>Retos del bosque:</strong> Salta encima de los Gatos Aliens, usa los hongos mágicos, cuídate de los puentes que caen y activa los farolitos de guardado.</span>
         </div>
       </div>
 
@@ -999,9 +999,9 @@
 
       <!-- ✏️ [CAMBIAR TEXTO 54]: Mensaje bonito al tocar el girasol (Líneas 816-822) -->
       <div class="bg-white/95 p-4 rounded-2xl border-2 border-pink-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 shadow-sm text-left">
-        <p class="font-bold text-pink-600 text-center text-sm">✨ Para la jugadora más linda ✨</p>
+        <p class="font-bold text-pink-600 text-center text-sm">✨ ¡Muchas felicidades en tu aventura! ✨</p>
         <p class="text-center">
-          "Superaste cada puente de bambú y a todos los gatitos espaciales hasta llegar aquí. Quería que este girasol gigante te recuerde lo mucho que iluminas mis días y lo especial que sos para mí."
+          "Superaste cada puente de bambú y a todos los gatitos espaciales hasta llegar aquí. Quería que este girasol gigante te recuerde la luz tan bonita que tienes y lo especial que eres. ¡Que este cumpleaños esté lleno de alegría!"
         </p>
         <div class="pt-1 text-[11px] text-amber-800 font-semibold text-center bg-amber-50 p-2 rounded-xl border border-amber-200">
           🌻 Flores recolectadas en el bosque: <span id="winCoinsCount" class="font-extrabold">0</span>
@@ -1014,7 +1014,7 @@
           onclick="closeGameModal()" 
           class="flex-1 py-3.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-white font-heading font-extrabold text-sm rounded-2xl shadow-lg transition active:scale-95"
         >
-          Guardar en mi corazón 💖
+          Volver al menú ✨
         </button>
         <button 
           onclick="restartGame()" 
@@ -1048,7 +1048,7 @@
 
       <div>
         <span class="text-[11px] font-bold uppercase tracking-wider bg-pink-200 text-pink-900 px-3 py-0.5 rounded-full">
-          Juego Día #2 • 20 Cartas (10 Pares)
+          Etapa 2 • 20 Cartas (10 Pares)
         </span>
         <!-- ✏️ [CAMBIAR TEXTO 59]: Título del Memorama -->
         <h3 class="font-heading font-extrabold text-2xl text-slate-800 mt-1.5">
@@ -1056,7 +1056,7 @@
         </h3>
         <!-- ✏️ [CAMBIAR TEXTO 60]: Historia / explicación del Memorama -->
         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-          Escondí <strong>10 fotos muy especiales</strong> (nuestros momentos en Roblox, detalles tiernos y hasta el <strong>Gato Alien</strong> 🐱🛸) en estas 20 cartas. ¡Encontrá todos los pares!
+          Escondí <strong>10 fotos muy especiales</strong> (nuestros momentos en Roblox, detalles tiernos y hasta el <strong>Gato Alien</strong> 🐱🛸) en estas 20 cartas. ¡Encuentra todos los pares!
         </p>
       </div>
 
@@ -1078,7 +1078,7 @@
 
         <div class="flex items-center space-x-3 text-xs text-slate-700">
           <span class="w-9 h-9 rounded-xl bg-lime-100 border border-lime-300 flex items-center justify-center font-bold text-base shrink-0">🔍</span>
-          <span>Podés tocar cualquier par encontrado para <strong>ver la foto en grande</strong> cuando quieras.</span>
+          <span>Puedes tocar cualquier par encontrado para <strong>ver la foto en grande</strong> cuando quieras.</span>
         </div>
       </div>
 
@@ -1169,15 +1169,15 @@
         </span>
         <!-- ✏️ [CAMBIAR TEXTO 62]: Título de Victoria del Memorama -->
         <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-pink-700 mt-2">
-          ¡Tienes una memoria increíble! 💖
+          ¡Tienes una memoria increíble! ✨
         </h3>
       </div>
 
       <!-- ✏️ [CAMBIAR TEXTO 63]: Dedicatoria al ganar el Memorama -->
       <div class="bg-white/95 p-4 rounded-2xl border-2 border-pink-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 shadow-sm">
-        <p class="font-bold text-amber-600 text-center text-sm">🌻 Cada foto guarda un pedacito nuestro 🌻</p>
+        <p class="font-bold text-amber-600 text-center text-sm">🌻 Pequeños momentos para celebrar tu día 🌻</p>
         <p class="text-center">
-          "Desde nuestras risas en Roblox hasta tu nombre escrito con cariño y ese michi alienígena. Gracias por hacer que cada momento con vos sea mi recuerdo favorito."
+          "Desde nuestras risas en Roblox hasta cada detalle compartido y ese gatito alienígena. Quería reunir estos recuerdos para sacarte una sonrisa hoy y recordarte lo valiosa, única y especial que eres. ¡Disfruta muchísimo tu cumpleaños!"
         </p>
         <div class="pt-1 text-[11px] text-pink-800 font-semibold text-center bg-pink-50 p-2 rounded-xl border border-pink-200">
           🃏 Completaste los 10 pares en <span id="memoWinMoves" class="font-extrabold">0</span> intentos ✨
@@ -1190,7 +1190,7 @@
           onclick="closeMemoModal()" 
           class="flex-1 py-3.5 bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-heading font-extrabold text-sm rounded-2xl shadow-lg transition active:scale-95"
         >
-          Guardar estos recuerdos 💖
+          Guardar estos recuerdos ✨
         </button>
         <button 
           onclick="startMemoGame()" 
@@ -1200,17 +1200,6 @@
         </button>
       </div>
 
-    </div>
-
-    <!-- MINI MODAL DE ZOOM PARA VER CUALQUIER FOTO EN GRANDE SIN PERDER CALIDAD -->
-    <div id="memoLightbox" onclick="closeMemoLightbox()" class="fixed inset-0 z-60 hidden bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 cursor-pointer">
-      <div class="relative max-w-sm w-full bg-white p-2.5 rounded-3xl border-4 border-amber-300 shadow-2xl text-center space-y-2" onclick="event.stopPropagation()">
-        <img id="memoLightboxImg" src="" alt="Foto ampliada" class="w-full aspect-[8/9] object-cover rounded-2xl shadow-inner" />
-        <p id="memoLightboxCaption" class="font-heading font-bold text-sm text-slate-800 py-1"></p>
-        <button onclick="closeMemoLightbox()" class="w-full py-2.5 bg-gradient-to-r from-pink-500 to-amber-500 text-white font-heading font-bold text-xs rounded-xl shadow">
-          Cerrar vista previa ✨
-        </button>
-      </div>
     </div>
 
   </div>
@@ -1235,7 +1224,7 @@
 
       <div>
         <span class="text-[11px] font-bold uppercase tracking-wider bg-indigo-200 text-indigo-950 px-3 py-0.5 rounded-full">
-          Juego Día #3 • 1 Minuto + Modo Astral
+          Etapa 3 • 1 Minuto + Modo Astral
         </span>
         <!-- ✏️ [CAMBIAR TEXTO 66]: Título del Juego 3 -->
         <h3 class="font-heading font-extrabold text-2xl text-slate-800 mt-1.5">
@@ -1259,7 +1248,7 @@
 
         <div class="flex items-center space-x-3 text-xs text-slate-700">
           <span class="w-9 h-9 rounded-xl bg-pink-100 border border-pink-300 flex items-center justify-center font-bold text-base shrink-0">🌻</span>
-          <span>Atrapa <strong>Girasoles (+15)</strong>, <strong>Corazones (+25)</strong> y <strong>Michis Aliens (+50)</strong>. Tienes <strong>3 vidas</strong>: ¡esquivá las tormentas eléctricas rojas ⚡!</span>
+          <span>Atrapa <strong>Girasoles (+15)</strong>, <strong>Corazones (+25)</strong> y <strong>Michis Aliens (+50)</strong>. Tienes <strong>3 vidas</strong>: ¡esquiva las tormentas eléctricas rojas ⚡!</span>
         </div>
 
         <div class="flex items-center space-x-3 text-xs text-slate-700">
@@ -1356,9 +1345,9 @@
 
       <!-- ✏️ [CAMBIAR TEXTO 70]: Mensaje bonito al ganar el Juego 3 -->
       <div class="bg-white/95 p-4 rounded-2xl border-2 border-indigo-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 shadow-sm">
-        <p class="font-bold text-indigo-600 text-center text-sm">🌌 Ni en otra dimensión dejaría de elegirte 🌌</p>
+        <p class="font-bold text-indigo-600 text-center text-sm">🌌 Brillas con una luz única en tu cumpleaños 🌌</p>
         <p class="text-center">
-          "Superaste el minuto completo y hasta la tormenta del Modo Astral. Así como atrapaste cada girasol y cada corazón, vos atrapaste el mío desde el primer día."
+          "Superaste el minuto completo y hasta la tormenta del Modo Astral. Así como lograste alcanzar cada estrella y cada girasol en el cielo, deseo que en este nuevo año de vida cumplas todo lo bonito que te propongas. ¡Mereces lo mejor hoy y siempre!"
         </p>
         <div class="pt-1 text-[11px] text-amber-900 font-semibold text-center bg-amber-50 p-2 rounded-xl border border-amber-200">
           🌟 Puntaje final alcanzado: <span id="catcherWinScore" class="font-extrabold">0</span> puntos ✨
@@ -1371,7 +1360,7 @@
           onclick="closeCatcherModal()" 
           class="flex-1 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white font-heading font-extrabold text-sm rounded-2xl shadow-lg transition active:scale-95"
         >
-          Guardar en mi corazón 💖
+          Volver al menú ✨
         </button>
         <button 
           onclick="startCatcherGame()" 
@@ -1398,7 +1387,7 @@
           ¡Te quedaste sin vidas! 💔
         </h3>
         <p class="text-xs sm:text-sm text-rose-100/80 mt-1">
-          Las tormentas eléctricas te alcanzaron cuando faltaban <strong id="catcherLoseTimeLeft" class="text-amber-300">0s</strong>. ¡Intentálo de nuevo para llegar al Modo Astral!
+          Las tormentas eléctricas te alcanzaron cuando faltaban <strong id="catcherLoseTimeLeft" class="text-amber-300">0s</strong>. ¡Inténtalo de nuevo para llegar al Modo Astral!
         </p>
       </div>
 
@@ -1441,7 +1430,7 @@
 
       <div>
         <span class="text-[11px] font-bold uppercase tracking-wider bg-cyan-200 text-cyan-950 px-3 py-0.5 rounded-full">
-          Juego Día #4 • 3 Jardines de Bambú
+          Etapa 4 • 3 Jardines de Bambú
         </span>
         <!-- ✏️ [CAMBIAR TEXTO 72]: Título del Juego 4 -->
         <h3 class="font-heading font-extrabold text-2xl text-slate-800 mt-1.5">
@@ -1449,7 +1438,7 @@
         </h3>
         <!-- ✏️ [CAMBIAR TEXTO 73]: Explicación del Juego 4 -->
         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-          ¡El Gran Girasol tiene sed! Conectá los canales de bambú desde el <strong>Manantial de Lluvia</strong> (arriba a la izquierda) hasta el <strong>Girasol</strong> (abajo a la derecha) a través de <strong>3 jardines</strong>.
+          ¡El Gran Girasol tiene sed! Conecta los canales de bambú desde el <strong>Manantial de Lluvia</strong> (arriba a la izquierda) hasta el <strong>Girasol</strong> (abajo a la derecha) a través de <strong>3 jardines</strong>.
         </p>
       </div>
 
@@ -1470,7 +1459,7 @@
 
         <div class="flex items-center space-x-3 text-xs text-slate-700">
           <span class="w-9 h-9 rounded-xl bg-pink-100 border border-pink-300 flex items-center justify-center font-bold text-base shrink-0">🌸</span>
-          <span>En los Jardines 2 y 3 hay <strong>Florecitas de Rocío 🌸</strong> en el tablero: ¡asegurate de que el agua también pase por ellas antes de llegar al girasol!</span>
+          <span>En los Jardines 2 y 3 hay <strong>Florecitas de Rocío 🌸</strong> en el tablero: ¡asegúrate de que el agua también pase por ellas antes de llegar al girasol!</span>
         </div>
       </div>
 
@@ -1503,7 +1492,7 @@
             Jardín 1 / 3
           </span>
           <span id="pipeBonusStatus" class="bg-pink-500/25 border border-pink-400/50 px-2.5 py-1 rounded-xl font-bold text-pink-200">
-            🌻 Conectá el agua
+            🌻 Conecta el agua
           </span>
         </div>
 
@@ -1582,9 +1571,9 @@
 
       <!-- ✏️ [CAMBIAR TEXTO 76]: Dedicatoria al ganar el Juego 4 -->
       <div class="bg-white/95 p-4 rounded-2xl border-2 border-cyan-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 shadow-sm">
-        <p class="font-bold text-cyan-700 text-center text-sm">💧 Gracias por cuidar cada detalle con tanto amor 💧</p>
+        <p class="font-bold text-cyan-700 text-center text-sm">💧 Que tu camino siempre esté lleno de cosas bonitas 💧</p>
         <p class="text-center">
-          "Conectaste cada caña de bambú hasta hacer florecer todos los jardines. Así como el agüita hace brillar a los girasoles, tu sonrisa hace brillar todo mi mundo."
+          "Conectaste cada caña de bambú con paciencia hasta hacer florecer los tres jardines. Que en este cumpleaños y siempre, tu vida siga floreciendo así de bonito y rodeada de momentos que te hagan muy feliz."
         </p>
         <div class="pt-1 text-[11px] text-emerald-900 font-semibold text-center bg-emerald-50 p-2 rounded-xl border border-emerald-200">
           🎋 Completaste los 3 acueductos en <span id="pipeWinMoves" class="font-extrabold">0</span> giros totales ✨
@@ -1597,7 +1586,7 @@
           onclick="closePipeModal()" 
           class="flex-1 py-3.5 bg-gradient-to-r from-cyan-500 via-sky-500 to-emerald-500 text-white font-heading font-extrabold text-sm rounded-2xl shadow-lg transition active:scale-95"
         >
-          Guardar en mi corazón 💖
+          Volver al menú ✨
         </button>
         <button 
           onclick="startPipeGame(0)" 
@@ -1816,27 +1805,30 @@
 
     <!-- PANTALLA 3: VICTORIA DEL JUEGO 5 -->
     <div id="puzzleWinScreen" class="hidden w-full max-w-md my-auto bg-white rounded-3xl p-5 text-center shadow-2xl border-4 border-amber-300 space-y-4">
-      <!-- Vista de las 3 obras armadas (con la foto de los ojos destacada) -->
+      <!-- Vista de las 3 obras armadas (con la foto de los ojos destacada y ampliable al tocarla) -->
       <div class="space-y-2 pt-1">
         <div class="flex items-center justify-center space-x-2.5">
-          <div class="w-20 h-24 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-md relative">
+          <div onclick="openMemoLightbox('assets/puzzle/puzzle_1.jpg', '🌈 Nivel 1: El Arcoíris en la Colina ✨')" class="w-20 h-24 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-md relative cursor-pointer active:scale-95 transition">
             <img src="assets/puzzle/puzzle_1.jpg" alt="Nivel 1 Completado" class="w-full h-full object-cover" />
-            <span class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full shadow">✓ Niv 1</span>
+            <span class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full shadow">🔍 Niv 1</span>
           </div>
-          <div class="w-28 h-24 rounded-2xl overflow-hidden border-2 border-rose-400 shadow-md relative">
+          <div onclick="openMemoLightbox('assets/puzzle/puzzle_2.jpg', '🎨 Nivel 2: Pintura del Lago ✨')" class="w-28 h-24 rounded-2xl overflow-hidden border-2 border-rose-400 shadow-md relative cursor-pointer active:scale-95 transition">
             <img src="assets/puzzle/puzzle_2.jpg" alt="Nivel 2 Completado" class="w-full h-full object-cover" />
-            <span class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full shadow">✓ Niv 2</span>
+            <span class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full shadow">🔍 Niv 2</span>
           </div>
         </div>
-        <div class="w-56 h-28 mx-auto rounded-2xl overflow-hidden border-3 border-pink-400 shadow-lg relative">
+        <div onclick="openMemoLightbox('assets/puzzle/puzzle_3.jpg', '👀 La foto de mis ojos que me habías pedido ✨')" class="w-64 h-32 mx-auto rounded-2xl overflow-hidden border-3 border-pink-400 shadow-lg relative cursor-pointer group active:scale-95 transition">
           <img src="assets/puzzle/puzzle_3.jpg" alt="Nivel 3 Mis Ojos" class="w-full h-full object-cover" />
-          <span class="absolute bottom-1.5 right-1.5 bg-pink-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow">👀💖 Extra Especial</span>
+          <span class="absolute bottom-1.5 right-1.5 bg-pink-600/95 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow flex items-center space-x-1">
+            <span>🔍</span>
+            <span>Toca para ver en grande</span>
+          </span>
         </div>
       </div>
 
       <div class="space-y-1">
         <span class="text-[10px] font-bold uppercase tracking-widest bg-amber-100 text-amber-900 px-3 py-1 rounded-full">
-          🏆 ¡Etapa 5 Superado!
+          🏆 ¡Etapa 5 Superada!
         </span>
         <!-- ✏️ [CAMBIAR TEXTO 81]: Título de Victoria Juego 5 -->
         <h4 class="font-heading font-extrabold text-2xl text-slate-800 pt-1">
@@ -1848,7 +1840,7 @@
         </p>
       </div>
 
-      <!-- Mensaje Romántico Desbloqueado -->
+      <!-- Mensaje Final Desbloqueado -->
       <div class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 p-4 rounded-2xl border border-amber-200 text-left space-y-2 shadow-inner">
         <div class="flex items-center space-x-2">
           <span class="text-base">💌</span>
@@ -1856,30 +1848,54 @@
         </div>
         <!-- ✏️ [CAMBIAR TEXTO 83]: Carta o dedicatoria al ganar el Juego 5 -->
         <p class="text-xs text-slate-700 leading-relaxed italic">
-          "Como me habías pedido una foto de mis ojos, te la escondí en este último rompecabezas para que sepas que solo tienen ojos para ti."
+          "Como me habías pedido una foto de mis ojos, la guardé como sorpresa especial en este último nivel. ¡Espero que te haya gustado armar cada etapa y que pases un cumpleaños muy bonito y especial!"
         </p>
         <div class="pt-1 text-[11px] text-amber-900 font-semibold text-center bg-amber-100/70 p-2 rounded-xl border border-amber-200">
           🧩 Completaste los 3 niveles en <span id="puzzleWinMoves" class="font-extrabold">0</span> movimientos ✨
         </div>
       </div>
 
-      <div class="flex items-center space-x-2 pt-1">
+      <div class="flex flex-col space-y-2 pt-1">
         <button 
-          onclick="closePuzzleModal()" 
-          class="flex-1 py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white font-heading font-extrabold text-sm rounded-2xl shadow-lg transition active:scale-95"
+          onclick="openMemoLightbox('assets/puzzle/puzzle_3.jpg', '👀 La foto de mis ojos que me habías pedido ✨')" 
+          class="w-full py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-heading font-extrabold text-xs rounded-2xl shadow-md transition active:scale-95 flex items-center justify-center space-x-1.5"
         >
-          Guardar en mi corazón 💖
+          <span>🔍</span>
+          <span>Ver foto de los ojos en grande</span>
         </button>
-        <button 
-          onclick="startPuzzleGame(0)" 
-          class="px-4 py-3.5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-heading font-bold rounded-2xl text-xs transition"
-        >
-          🔄 Jugar otra vez
-        </button>
+        <div class="flex items-center space-x-2">
+          <button 
+            onclick="closePuzzleModal()" 
+            class="flex-1 py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white font-heading font-extrabold text-sm rounded-2xl shadow-lg transition active:scale-95"
+          >
+            Volver al menú ✨
+          </button>
+          <button 
+            onclick="startPuzzleGame(0)" 
+            class="px-4 py-3.5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-heading font-bold rounded-2xl text-xs transition"
+          >
+            🔄 Jugar otra vez
+          </button>
+        </div>
       </div>
 
     </div>
 
+  </div>
+
+  <!-- =========================================================================
+       VISOR GLOBAL DE FOTOS EN GRANDE (FUNCIONA EN MEMORAMA Y ROMPECABEZAS)
+       ========================================================================= -->
+  <div id="memoLightbox" onclick="closeMemoLightbox()" class="fixed inset-0 z-[90] hidden bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 cursor-pointer select-none">
+    <div class="relative max-w-md w-full bg-white p-3 rounded-3xl border-4 border-amber-300 shadow-2xl text-center space-y-2.5" onclick="event.stopPropagation()">
+      <div class="w-full max-h-[72vh] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center shadow-inner">
+        <img id="memoLightboxImg" src="" alt="Foto ampliada" class="w-full max-h-[72vh] object-contain rounded-2xl" />
+      </div>
+      <p id="memoLightboxCaption" class="font-heading font-bold text-sm text-slate-800 py-0.5 px-2"></p>
+      <button onclick="closeMemoLightbox()" class="w-full py-3 bg-gradient-to-r from-pink-500 to-amber-500 text-white font-heading font-extrabold text-xs rounded-xl shadow active:scale-95 transition">
+        Cerrar vista en grande ✨
+      </button>
+    </div>
   </div>
 
   <!-- =========================================================================
@@ -2320,6 +2336,15 @@
     function enterExperience() {
       playCutePop(750);
       playFanfare();
+
+      // Mostrar el contenido principal recién al entrar para que jamás se transparente durante la carga
+      const headerEl = document.getElementById('mainHeader');
+      const mainEl = document.getElementById('mainContent');
+      const petalsEl = document.getElementById('petals-container');
+      if (headerEl) headerEl.classList.remove('opacity-0', 'invisible');
+      if (mainEl) mainEl.classList.remove('opacity-0', 'invisible');
+      if (petalsEl) petalsEl.classList.remove('opacity-0', 'invisible');
+
       const loader = document.getElementById('loadingScreen');
       loader.classList.add('opacity-0', 'pointer-events-none');
       setTimeout(() => {
@@ -5348,7 +5373,7 @@
       const bonusEl = document.getElementById('pipeBonusStatus');
       if (bonusEl) {
         if (cfg.bonuses.length === 0) {
-          bonusEl.innerText = '🌻 Llevá el agua a la meta';
+          bonusEl.innerText = '🌻 Lleva el agua a la meta';
         } else {
           let lit = 0;
           cfg.bonuses.forEach(([br, bc]) => {
@@ -6044,7 +6069,17 @@
       document.addEventListener('click', (e) => {
         const canvas = document.getElementById('puzzleBoardCanvas');
         if (!canvas || e.target !== canvas) return;
-        if (puzzleState.locked || puzzleState.isComplete) return;
+
+        // Si ya completó el rompecabezas (especialmente el Nivel 3 de los ojos), tocar el cuadro abre la foto en grande
+        if (puzzleState.isComplete) {
+          const lvl = PUZZLE_LEVELS[puzzleState.levelIdx];
+          const caption = puzzleState.levelIdx === 2
+            ? '👀 La foto de mis ojos que me habías pedido ✨'
+            : `${lvl.icon} ${lvl.name}`;
+          openMemoLightbox(lvl.image, caption);
+          return;
+        }
+        if (puzzleState.locked) return;
 
         const lvl = PUZZLE_LEVELS[puzzleState.levelIdx];
         const rect = canvas.getBoundingClientRect();
@@ -6164,14 +6199,38 @@
           advanceToNextPuzzleLevelNow();
         }, 2000);
       } else {
-        document.getElementById('puzzleToastTitle').innerText = "👀💖 ¡Los 3 Rompecabezas Listos! 🏆";
-        document.getElementById('puzzleToastSub').innerText = "¡Desbloqueaste la sorpresa final del Etapa 5!";
-        nextBtn.innerText = "Ver sorpresa final ➔";
-        toast.classList.remove('hidden');
+        // Nivel 3 Extra (Foto de los ojos): NO tapar la foto ni quitarla sola.
+        // Dejar la imagen limpia arriba para que la pueda admirar y ver en grande todo el tiempo que quiera.
+        toast.classList.add('hidden');
+        document.getElementById('puzzleStatusHint').innerText = "✨ ¡Foto armada! Tócala arriba o usa el botón de abajo para verla en grande";
 
-        puzzleState.nextLevelTimer = setTimeout(() => {
-          advanceToNextPuzzleLevelNow();
-        }, 1800);
+        const trayEl = document.getElementById('puzzleTrayContainer');
+        if (trayEl) {
+          trayEl.innerHTML = `
+            <div class="w-full py-2 px-2 flex flex-col items-center justify-center space-y-2.5 text-center">
+              <p class="font-heading font-extrabold text-xs sm:text-sm text-amber-300">
+                👀✨ ¡Armaste la foto de mis ojos!
+              </p>
+              <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onclick="openMemoLightbox('assets/puzzle/puzzle_3.jpg', '👀 La foto de mis ojos que me habías pedido ✨')"
+                  class="w-full sm:w-auto flex-1 py-2.5 px-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-heading font-extrabold text-xs rounded-xl shadow-lg active:scale-95 transition flex items-center justify-center space-x-1.5"
+                >
+                  <span>🔍</span>
+                  <span>Ver foto en grande</span>
+                </button>
+                <button
+                  type="button"
+                  onclick="advanceToNextPuzzleLevelNow()"
+                  class="w-full sm:w-auto flex-1 py-2.5 px-4 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-heading font-extrabold text-xs rounded-xl shadow-lg active:scale-95 transition flex items-center justify-center space-x-1.5"
+                >
+                  <span>Continuar a la nota final ➔</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }
       }
     }
 
