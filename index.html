@@ -268,11 +268,14 @@
   <!-- Barra superior compacta para celular (oculta mientras está la pantalla de carga) -->
   <header id="mainHeader" class="sticky top-0 z-30 backdrop-blur-md bg-white/75 border-b border-pink-100/80 px-4 py-2.5 shadow-sm opacity-0 invisible transition-opacity duration-500">
     <div class="max-w-md sm:max-w-xl mx-auto flex items-center justify-between">
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2" onclick="handleHeaderSecretTap()">
         <span class="text-2xl animate-spin-slow">🌻</span>
         <!-- ✏️ [CAMBIAR TEXTO 4]: Título en la barra superior -->
         <span class="font-heading font-bold text-base sm:text-lg text-amber-900 tracking-wide">
           Para la niña linda
+        </span>
+        <span id="creatorModeBadge" onclick="event.stopPropagation(); resetCreatorLocalTest();" class="hidden text-[10px] font-extrabold bg-slate-800 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400 cursor-pointer shadow" title="Tus pruebas no modifican los datos de Esme. Toca para reiniciar tu vista de prueba.">
+          🛠️ Modo Creador (Reiniciar vista)
         </span>
       </div>
 
@@ -1903,14 +1906,76 @@
        ========================================================================= -->
   <script>
     /* =========================================================================
-       0. CONEXIÓN A GOOGLE FIREBASE REALTIME DATABASE + RESPALDO LOCAL
-       - Guarda progreso del Juego 1, Juego 2 (Memorama), Girasol y Visitas
-       - Funciona 100% transparente para Esme (sin contraseñas ni correos)
-       - Puedes ver en vivo las estadísticas desde la consola de Firebase
+       0. CONEXIÓN A GOOGLE FIREBASE REALTIME DATABASE + SEPARACIÓN CREADOR / ESME
+       - Cuando entra Esme al link normal: guarda todo su progreso real en Firebase (progreso_esme)
+       - Cuando entras tú (detectado automáticamente en tu celular de pruebas, o entrando con ?yo=1,
+         o tocando 5 veces el girasol de arriba a la izquierda): activa el Modo Creador aislado
+         para que tus visitas y pruebas JAMÁS se mezclen ni modifiquen los datos de Esme.
        ========================================================================= */
-    // 🛑 MODO PRUEBA (true): Pausa el guardado en Firebase para que pruebes libremente
-    // sin alterar las visitas ni el progreso limpio de Esme. (Cámbialo a false al entregárselo)
-    const MODO_PRUEBA = true;
+    function checkIsCreatorDevice() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('yo') === '1' || params.get('test') === '1' || params.get('admin') === '1') {
+          localStorage.setItem('esme_modo_creador', 'true');
+          return true;
+        }
+        if (params.get('esme') === '1') {
+          localStorage.removeItem('esme_modo_creador');
+          localStorage.removeItem('esme_cumple_progreso');
+          return false;
+        }
+        // Si este navegador ya tenía datos de la sesión de prueba previa (esme_cumple_progreso),
+        // lo marcamos automáticamente como tu teléfono de creador para no mezclar nada con Esme
+        if (localStorage.getItem('esme_modo_creador') === 'true' || localStorage.getItem('esme_cumple_progreso') !== null) {
+          localStorage.setItem('esme_modo_creador', 'true');
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    const MODO_PRUEBA = checkIsCreatorDevice();
+    const LOCAL_STORAGE_KEY = MODO_PRUEBA ? 'esme_cumple_progreso' : 'esme_progreso_oficial_v1';
+
+    // Mostrar insignia discreta arriba solo en tu dispositivo de Creador
+    window.addEventListener('DOMContentLoaded', () => {
+      if (MODO_PRUEBA) {
+        const badge = document.getElementById('creatorModeBadge');
+        if (badge) badge.classList.remove('hidden');
+      }
+    });
+
+    // Atajo secreto: tocar 5 veces seguidas el título "🌻 Para la niña linda" activa/desactiva Modo Creador
+    let headerSecretTaps = 0;
+    let headerSecretTimer = null;
+    function handleHeaderSecretTap() {
+      headerSecretTaps++;
+      if (headerSecretTimer) clearTimeout(headerSecretTimer);
+      if (headerSecretTaps >= 5) {
+        headerSecretTaps = 0;
+        try {
+          if (MODO_PRUEBA) {
+            if (confirm("🛠️ Estás en Modo Creador (aislado de los datos de Esme).\n\n¿Quieres reiniciar tu progreso de prueba local para ver todo como nuevo?")) {
+              resetCreatorLocalTest();
+            }
+          } else {
+            localStorage.setItem('esme_modo_creador', 'true');
+            alert("🛠️ ¡Modo Creador activado en este dispositivo! Tus visitas y pruebas ya no afectarán los datos de Esme.");
+            window.location.reload();
+          }
+        } catch (e) {}
+      } else {
+        headerSecretTimer = setTimeout(() => { headerSecretTaps = 0; }, 1200);
+      }
+    }
+
+    function resetCreatorLocalTest() {
+      try {
+        localStorage.removeItem('esme_cumple_progreso');
+        localStorage.setItem('esme_modo_creador', 'true');
+        window.location.reload();
+      } catch (e) {}
+    }
 
     const firebaseConfig = {
       apiKey: "AIzaSyA4wfO9qyrQhnYHm_51Vu5SqD4RhohJa9A",
@@ -1946,9 +2011,9 @@
     };
     let pendingUnlockStage = null;
 
-    // 1. Carga inmediata desde memoria local (0ms de espera)
+    // 1. Carga inmediata desde memoria local (aislada entre Creador y Esme)
     try {
-      const localData = localStorage.getItem('esme_cumple_progreso');
+      const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (localData) {
         const parsed = JSON.parse(localData);
         appProgress = Object.assign(appProgress, parsed);
@@ -1960,7 +2025,7 @@
       console.warn("LocalStorage no disponible:", e);
     }
 
-    // 2. Conectar con Firebase en la nube
+    // 2. Conectar con Firebase en la nube (SOLO cuando entra Esme, nunca en Modo Creador)
     try {
       if (typeof firebase !== 'undefined' && !MODO_PRUEBA) {
         firebase.initializeApp(firebaseConfig);
@@ -2013,7 +2078,7 @@
           renderProgressUI();
         });
 
-        // Registrar visita y hora en la nube
+        // Registrar visita y hora en la nube (únicamente de Esme)
         fbDbRef.child('visitas').transaction(curr => (curr || 0) + 1);
         fbDbRef.child('ultima_conexion').set(new Date().toLocaleString());
       }
@@ -2023,7 +2088,7 @@
 
     function saveLocalProgress() {
       try {
-        localStorage.setItem('esme_cumple_progreso', JSON.stringify(appProgress));
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appProgress));
       } catch (e) {}
     }
 
